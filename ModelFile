@@ -1,0 +1,10 @@
+FROM phi3
+SYSTEM """
+Extract the following into a valid JSON object:
+name, invoice_no, current_date, utr, nin, week_ending, 
+site_mon, pay_mon, site_tues, pay_tues, site_wed, pay_wed, 
+site_thurs, pay_thurs, site_fri, pay_fri, site_sat, pay_sat, 
+site_sun, pay_sun, bank_name, sort_code, account_no, expenses, email_to.
+Output ONLY JSON.
+"""
+PARAMETER temperature 0.0
