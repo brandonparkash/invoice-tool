@@ -3,8 +3,9 @@ import re
 
 
 # Invoice maker function.
-def func_invoice(name, invoice_no, current_date, utr, nin, week_ending, site_mon, pay_mon, site_tues, pay_tues, site_wed, pay_wed,
-            site_thurs, pay_thurs, site_fri, pay_fri, site_sat, pay_sat, site_sun, pay_sun, bank_name, sort_code, account_no, expenses):
+def func_invoice(name, invoice_no, current_date, utr, nin, week_ending, company_name, company_road, company_city, 
+                company_postcode, site_mon, pay_mon, site_tues, pay_tues, site_wed, pay_wed, site_thurs, 
+                pay_thurs, site_fri, pay_fri, site_sat, pay_sat, site_sun, pay_sun, bank_name, sort_code, account_no, expenses):
     
     wb = openpyxl.Workbook()
     ws = wb.active
@@ -35,14 +36,11 @@ def func_invoice(name, invoice_no, current_date, utr, nin, week_ending, site_mon
     
     # Custom information
     ws["A4"] = "TO"
-    ws["A5"] = "*****"
-    ws["A6"] = "**********"
-    ws["A7"] = "*********"
+    ws["A5"] = company_name
 
-    ws["A9"] = "** ***** ****"
-    ws["A10"] = "****"
-    ws["A11"] = "*******"
-    ws["A12"] = "**** ***"
+    ws["A9"] = company_road
+    ws["A10"] = company_city
+    ws["A11"] = company_postcode
 
     # Job information for each day
     ws["A19"] = "Monday"
@@ -103,6 +101,4 @@ def func_pay(mon, tues, wed, thurs, fri, sat, sun):
     gross = sum([mon, tues, wed, thurs, fri, sat, sun])
     tax = (gross / 10) * 2
     take_home = gross - tax
-
     return {"gross": gross, "tax": tax, "take_home": take_home}
-
