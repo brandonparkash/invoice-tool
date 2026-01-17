@@ -1,10 +1,10 @@
-Flow:
+## Flow:
 1) Load preformatted excel sheet. ✔️
 2) Get user to input required data. ✔️
 3) Upload user data to the form to fill in missing blanks. ✔️
 4) Generate the form. ✔️
 
-#TODO:
+## TODO:
 - Learn FastAPI to run server ✔️
 
 
