@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en-UK">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width", initial_scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', path='css/main.css') }}">
+    <link rel="icon" type="image/x-icon" href="{{ url_for('static', path='images/pic.png') }}">
+    <title>{{ title }}</title>
+  </head>
+
+  <body>
+    <!-- Header -->
+    <header>
+      <h2>{{ title }}</h2>
+    </header>
+  
+    <!-- About Us Section -->
+    <section>
+      <section>
+        <h3>About Us:</h3>
+        <h4>Content:</h4>
+        <p>
+          The <strong>Subcontractor's Automation Tool</strong> is designed for small to medium subcontractor businesses
+          who don't have time to waste on the books. The purpose of this tool is to ask for information that you normally
+          would fill in yourself, then generate a custom excel invoice.
+        </p>
+        <h4>Instructions:</h4>
+        <p>
+          Simply fill in the form below, choose the format of the document that you want to download, then submit the form
+          and receive your invoice.
+        </p>
+      </section><br>
+  
+      <!-- Form Section -->
+      <section id="invoice_form">
+        <h3>Invoice Automation Form:</h3>
+        <h4>General Information</h4>
+        <form action="{{ url_for('home') }}" method="post">
+          <label for="name">Enter your name: </label>
+          <input type="text" id="name" name="name"><br><br>
+          <label for="invoice_no">Enter your invoice number: </label>
+          <input type="text" id="invoice_no" name="invoice_no"><br><br>
+
+          <label for="current_date">Enter today's date: </label>
+          <input type="text" id="current_date" name="current_date"><br><br>
+          <label for="utr">Enter your UTR number: </label>
+          <input type="text" id="utr" name="utr"><br><br>
+
+          <label for="nin">Enter your National Insurance Number: </label>
+          <input type="text" id="nin" name="nin"><br><br>
+          <label for="week_ending">Enter the Week Ending date for this timesheet: </label>
+          <input type="text" id="week_ending" name="week_ending"><br><br>
+
+        <h4>Job Information</h4>
+          <label for="site_mon"><strong>Monday</strong> - Site Name: </label>
+          <input type="text" id="site_mon" name="site_mon">&nbsp;
+          <label for="pay_mon">Day Rate: £</label>
+          <input type="text" id="pay_mon" name="pay_mon"><br><br>
+
+          <label for="site_tues"><strong>Tuesday</strong> - Site Name: </label>
+          <input type="text" id="site_tues" name="site_tues">&nbsp;
+          <label for="pay_tues">Day Rate: £</label>
+          <input type="text" id="pay_tues" name="pay_tues"><br><br>
+
+          <label for="site_wed"><strong>Wednesday</strong> - Site Name: </label>
+          <input type="text" id="site_wed" name="site_wed">&nbsp;
+          <label for="pay_wed">Day Rate: £</label>
+          <input type="text" id="pay_wed" name="pay_wed"><br><br>
+
+          <label for="site_thurs"><strong>Thursday</strong> - Site Name: </label>
+          <input type="text" id="site_thurs" name="site_thurs">&nbsp;
+          <label for="pay_thurs">Day Rate: £</label>
+          <input type="text" id="pay_thurs" name="pay_thurs"><br><br>
+
+          <label for="site_fri"><strong>Friday</strong> - Site Name: </label>
+          <input type="text" id="site_fri" name="site_fri">&nbsp;
+          <label for="pay_fri">Day Rate: £</label>
+          <input type="text" id="pay_fri" name="pay_fri"><br><br>
+
+          <label for="site_sat"><strong>Saturday</strong> - Site Name: </label>
+          <input type="text" id="site_sat" name="site_sat">&nbsp;
+          <label for="pay_sat">Day Rate: £</label>
+          <input type="text" id="pay_sat" name="pay_sat"><br><br>
+      
+          <label for="site_sun"><strong>Sunday</strong> - Site Name: </label>
+          <input type="text" id="site_sun" name="site_sun">&nbsp;
+          <label for="pay_sun">Day Rate: £</label>
+          <input type="text" id="pay_sun" name="pay_sun"><br><br>
+
+        <h4>Bank Details</h4>
+        <label for="bank_name">Enter your name: </label>
+        <input type="text" id="bank_name" name="bank_name"><br><br>
+        <label for="sort_code">Enter your sort code: </label>
+        <input type="text" id="sort_code" name="sort_code"><br><br>
+        <label for="account_no">Enter your account number: </label>
+        <input type="text" id="account_no" name="account_no"><br><br>
+        <label for ="expenses">Enter your job expenses: £</label>
+        <input type="text" id="expenses" name="expenses"><br><br>
+
+        <input type="submit">
+        <input type="reset">
+      </form>
+    </section>
+
+    <!-- Footer Section -->
+    </section><br><br>
+    <footer>
+      <a href="mailto:work.bpc189@gmail.com?subject=General%20Enquiry" target="_blank"><img src="{{ url_for('static', path='images/mail.png') }}" class="socials" alt="Mail"></a>
+      <a href="https://www.instagram.com/brandonparkash/" target="_blank"><img src="{{ url_for('static', path='images/ig.png') }}" id="insta" alt="Instagram"></a>
+      <a href="https://www.youtube.com/@BrandonParkash" target="_blank"><img src="{{ url_for('static', path='images/yt.png') }}" class="socials" alt="YouTube" ></a>
+      <a href="https://www.linkedin.com/in/brandon-cooper-ai/" target="_blank"><img src="{{ url_for('static', path='images/linkedin.png') }}"class="socials alt="LinkedIn""></a>
+    </footer>
+  </body>
+</html>
