@@ -105,3 +105,4 @@ def func_pay(mon, tues, wed, thurs, fri, sat, sun):
     take_home = gross - tax
 
     return {"gross": gross, "tax": tax, "take_home": take_home}
+
