@@ -22,7 +22,7 @@ async def home(request: Request):
     return templates.TemplateResponse(
         "index.html", {
             "request": request,
-            "title": "Worker Invoice Tool"
+            "title": "Worker Invoice Generator"
         }
     )
 
@@ -35,6 +35,10 @@ async def handle_invoice(
     current_date: str = Form(...),
     utr: str = Form(...),
     nin: str = Form(...),
+    company_name: str = Form(...),
+    company_road: str = Form(...),
+    company_city: str = Form(...),
+    company_postcode: str = Form(...),
     week_ending: str = Form(...),
     site_mon: str = Form(""),
     pay_mon: str = Form("0"),
@@ -55,12 +59,13 @@ async def handle_invoice(
     account_no: str = Form(...),
     expenses: str = Form("0")
 ):
-    fname = func_invoice(name, invoice_no, current_date, utr, nin, week_ending, site_mon, pay_mon, site_tues, pay_tues, site_wed, pay_wed,
-        site_thurs, pay_thurs, site_fri, pay_fri, site_sat, pay_sat, site_sun, pay_sun, bank_name, sort_code, account_no, expenses)
+    fname = func_invoice(name, invoice_no, current_date, utr, nin, week_ending, company_name, company_road,
+                    company_city, company_postcode, site_mon, pay_mon, site_tues, pay_tues, site_wed, pay_wed,
+                    site_thurs, pay_thurs, site_fri, pay_fri, site_sat, pay_sat, site_sun, pay_sun, bank_name,
+                    sort_code, account_no, expenses)
 
     return FileResponse(
         path=Path.cwd() / fname,
         filename=fname,
         media_type="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-
     )
