@@ -22,7 +22,7 @@ async def home(request: Request):
     return templates.TemplateResponse(
         "index.html", {
             "request": request,
-            "title": "Subcontractor Invoice Automation"
+            "title": "Worker Invoice Tool"
         }
     )
 
@@ -62,4 +62,5 @@ async def handle_invoice(
         path=Path.cwd() / fname,
         filename=fname,
         media_type="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+
     )
