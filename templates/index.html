@@ -1,154 +1,109 @@
 <!DOCTYPE html>
-<html lang="en-UK">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ title }}</title>
+    <title>Invoice Tool v3</title>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="bg-gray-50 text-gray-800 font-sans">
-
-    <header class="bg-slate-800 text-white p-4 shadow-md">
-        <div class="max-w-4xl mx-auto flex justify-between items-center">
-            <h2 class="text-xl font-bold tracking-wide">{{ title }}</h2>
-        </div>
-    </header>
-
-    <div class="max-w-4xl mx-auto p-6">
+<body class="bg-slate-100 min-h-screen p-4 md:p-8 font-sans">
+    <div class="max-w-5xl mx-auto space-y-6">
         
-        <div class="bg-white rounded-lg shadow p-6 mb-6">
-            <h3 class="text-lg font-semibold mb-2 text-slate-700">Quick Invoice Generator</h3>
-            <p class="text-gray-600 text-sm">
-                Fill out the details below to generate a professional PDF-ready Excel invoice instantly. 
-                Calculates 20% CIS tax automatically.
-            </p>
+        <div class="bg-white p-6 rounded-xl shadow-md border-t-4 border-blue-600">
+            <h1 class="text-2xl font-black text-slate-800">Worker Invoice Dashboard</h1>
         </div>
 
-        <form action="{{ url_for('home') }}" method="post" class="space-y-6">
-            
-            <div class="bg-white rounded-lg shadow p-6 border-l-4 border-blue-500">
-                <h4 class="text-lg font-bold mb-4 border-b pb-2">1. Your Details</h4>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700">Full Name</label>
-                        <input type="text" name="name" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border">
-                    </div>
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700">Invoice Number</label>
-                        <input type="text" name="invoice_no" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border">
-                    </div>
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700">UTR Number</label>
-                        <input type="text" name="utr" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border">
-                    </div>
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700">NI Number</label>
-                        <input type="text" name="nin" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border">
-                    </div>
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700">Date</label>
-                        <input type="text" name="current_date" placeholder="DD/MM/YYYY" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border">
-                    </div>
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700">Week Ending</label>
-                        <input type="text" name="week_ending" placeholder="DD/MM/YYYY" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border">
-                    </div>
-                </div>
-            </div>
-
-            <div class="bg-white rounded-lg shadow p-6 border-l-4 border-indigo-500">
-                <h4 class="text-lg font-bold mb-4 border-b pb-2">2. Bill To (Company)</h4>
-                <div class="grid grid-cols-1 gap-4">
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700">Company Name</label>
-                        <input type="text" name="company_name" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 p-2 border">
-                    </div>
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                        <input type="text" name="company_road" placeholder="Road / Street" required class="block w-full rounded-md border-gray-300 shadow-sm p-2 border">
-                        <input type="text" name="company_city" placeholder="City" required class="block w-full rounded-md border-gray-300 shadow-sm p-2 border">
-                        <input type="text" name="company_postcode" placeholder="Postcode" required class="block w-full rounded-md border-gray-300 shadow-sm p-2 border">
-                    </div>
-                </div>
-            </div>
-
-            <div class="bg-white rounded-lg shadow p-6 border-l-4 border-green-500">
-                <h4 class="text-lg font-bold mb-4 border-b pb-2">3. Timesheet</h4>
-                <div class="space-y-3">
-                    <div class="hidden md:grid grid-cols-6 gap-2 font-semibold text-sm text-gray-600">
-                        <div class="col-span-1">Day</div>
-                        <div class="col-span-3">Site / Description</div>
-                        <div class="col-span-2">Rate (£)</div>
-                    </div>
-
-                    <div class="grid grid-cols-1 md:grid-cols-6 gap-2 items-center">
-                        <div class="font-medium text-gray-700">Monday</div>
-                        <input type="text" name="site_mon" placeholder="Site Name" class="col-span-3 rounded-md border-gray-300 border p-2">
-                        <input type="number" step="0.01" name="pay_mon" placeholder="0.00" class="col-span-2 rounded-md border-gray-300 border p-2">
-                    </div>
-                    <div class="grid grid-cols-1 md:grid-cols-6 gap-2 items-center">
-                        <div class="font-medium text-gray-700">Tuesday</div>
-                        <input type="text" name="site_tues" placeholder="Site Name" class="col-span-3 rounded-md border-gray-300 border p-2">
-                        <input type="number" step="0.01" name="pay_tues" placeholder="0.00" class="col-span-2 rounded-md border-gray-300 border p-2">
-                    </div>
-                    <div class="grid grid-cols-1 md:grid-cols-6 gap-2 items-center">
-                        <div class="font-medium text-gray-700">Wednesday</div>
-                        <input type="text" name="site_wed" placeholder="Site Name" class="col-span-3 rounded-md border-gray-300 border p-2">
-                        <input type="number" step="0.01" name="pay_wed" placeholder="0.00" class="col-span-2 rounded-md border-gray-300 border p-2">
-                    </div>
-                    <div class="grid grid-cols-1 md:grid-cols-6 gap-2 items-center">
-                        <div class="font-medium text-gray-700">Thursday</div>
-                        <input type="text" name="site_thurs" placeholder="Site Name" class="col-span-3 rounded-md border-gray-300 border p-2">
-                        <input type="number" step="0.01" name="pay_thurs" placeholder="0.00" class="col-span-2 rounded-md border-gray-300 border p-2">
-                    </div>
-                    <div class="grid grid-cols-1 md:grid-cols-6 gap-2 items-center">
-                        <div class="font-medium text-gray-700">Friday</div>
-                        <input type="text" name="site_fri" placeholder="Site Name" class="col-span-3 rounded-md border-gray-300 border p-2">
-                        <input type="number" step="0.01" name="pay_fri" placeholder="0.00" class="col-span-2 rounded-md border-gray-300 border p-2">
-                    </div>
-                    <div class="grid grid-cols-1 md:grid-cols-6 gap-2 items-center">
-                        <div class="font-medium text-gray-700">Saturday</div>
-                        <input type="text" name="site_sat" placeholder="Site Name" class="col-span-3 rounded-md border-gray-300 border p-2">
-                        <input type="number" step="0.01" name="pay_sat" placeholder="0.00" class="col-span-2 rounded-md border-gray-300 border p-2">
-                    </div>
-                    <div class="grid grid-cols-1 md:grid-cols-6 gap-2 items-center">
-                        <div class="font-medium text-gray-700">Sunday</div>
-                        <input type="text" name="site_sun" placeholder="Site Name" class="col-span-3 rounded-md border-gray-300 border p-2">
-                        <input type="number" step="0.01" name="pay_sun" placeholder="0.00" class="col-span-2 rounded-md border-gray-300 border p-2">
-                    </div>
-                </div>
-            </div>
-
-            <div class="bg-white rounded-lg shadow p-6 border-l-4 border-orange-500">
-                <h4 class="text-lg font-bold mb-4 border-b pb-2">4. Payment Details</h4>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700">Bank Name</label>
-                        <input type="text" name="bank_name" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2 border">
-                    </div>
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700">Expenses (£)</label>
-                        <input type="number" step="0.01" name="expenses" placeholder="0.00" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2 border">
-                    </div>
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700">Sort Code</label>
-                        <input type="text" name="sort_code" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2 border">
-                    </div>
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700">Account Number</label>
-                        <input type="text" name="account_no" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2 border">
-                    </div>
-                </div>
-            </div>
-
-            <button type="submit" class="w-full bg-slate-800 text-white font-bold py-4 px-6 rounded-lg hover:bg-slate-700 transition duration-200 shadow-lg text-lg">
-                Generate Invoice
+        <div class="bg-white p-6 rounded-xl shadow-md">
+            <label class="block text-sm font-bold text-blue-600 mb-2 uppercase">AI Assistant: Paste your week summary</label>
+            <textarea id="ai-input" class="w-full h-32 border border-slate-200 rounded-lg p-4 focus:ring-2 focus:ring-blue-500 outline-none" 
+                placeholder="Example: I'm John, UTR 123. Worked Monday at site A for £200, Tuesday at site B for £200. My bank is Barclays..."></textarea>
+            <button onclick="runAI()" id="ai-btn" class="mt-4 bg-blue-600 text-white px-8 py-3 rounded-lg font-bold hover:bg-blue-700 transition">
+                Extract to Form ↓
             </button>
+        </div>
+
+        <form action="/generate" method="post" class="bg-white p-8 rounded-xl shadow-md space-y-8">
+            <h2 class="text-lg font-bold text-slate-700 border-b pb-2">Invoice Details</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div><label class="text-xs font-bold text-slate-500">NAME</label><input type="text" name="name" id="f_name" class="w-full border-b p-2 outline-none focus:border-blue-500" required></div>
+                <div><label class="text-xs font-bold text-slate-500">INVOICE #</label><input type="text" name="invoice_no" id="f_invoice_no" class="w-full border-b p-2 outline-none focus:border-blue-500"></div>
+                <div><label class="text-xs font-bold text-slate-500">DATE</label><input type="text" name="current_date" id="f_current_date" class="w-full border-b p-2 outline-none focus:border-blue-500"></div>
+                <div><label class="text-xs font-bold text-slate-500">UTR</label><input type="text" name="utr" id="f_utr" class="w-full border-b p-2 outline-none focus:border-blue-500"></div>
+                <div><label class="text-xs font-bold text-slate-500">NI NUMBER</label><input type="text" name="nin" id="f_nin" class="w-full border-b p-2 outline-none focus:border-blue-500"></div>
+                <div><label class="text-xs font-bold text-slate-500">WEEK ENDING</label><input type="text" name="week_ending" id="f_week_ending" class="w-full border-b p-2 outline-none focus:border-blue-500"></div>
+            </div>
+
+            <div class="pt-4">
+                <h3 class="font-bold text-slate-700 mb-4">Weekly Breakdown</h3>
+                <div class="space-y-3">
+                    <div class="grid grid-cols-12 gap-4 font-bold text-[10px] text-slate-400 px-2 uppercase">
+                        <div class="col-span-2">Day</div><div class="col-span-7">Site Name</div><div class="col-span-3 text-right">Pay (£)</div>
+                    </div>
+                    
+                    <script>
+                        const days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
+                        const keys = ["mon", "tues", "wed", "thurs", "fri", "sat", "sun"];
+                        days.forEach((day, i) => {
+                            document.write(`
+                                <div class="grid grid-cols-12 gap-4 items-center bg-slate-50 p-2 rounded border border-slate-100">
+                                    <span class="col-span-2 text-sm font-bold text-slate-600">${day}</span>
+                                    <input type="text" name="site_${keys[i]}" id="f_site_${keys[i]}" class="col-span-7 border rounded p-2 text-sm">
+                                    <input type="number" name="pay_${keys[i]}" id="f_pay_${keys[i]}" value="0" class="col-span-3 border rounded p-2 text-right font-mono">
+                                </div>
+                            `);
+                        });
+                    </script>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 pt-6 border-t">
+                <div class="space-y-4">
+                    <h3 class="font-bold text-slate-700">Bank & Expenses</h3>
+                    <input type="text" name="bank_name" id="f_bank_name" placeholder="Bank Name" class="w-full border p-3 rounded">
+                    <div class="flex gap-4">
+                        <input type="text" name="sort_code" id="f_sort_code" placeholder="Sort Code" class="w-1/2 border p-3 rounded">
+                        <input type="text" name="account_no" id="f_account_no" placeholder="Account #" class="w-1/2 border p-3 rounded">
+                    </div>
+                    <input type="number" name="expenses" id="f_expenses" value="0" placeholder="Expenses" class="w-full border p-3 rounded">
+                </div>
+                
+                <div class="bg-slate-900 text-white p-6 rounded-xl space-y-4">
+                    <h3 class="font-bold">Generate & Deliver</h3>
+                    <select name="delivery" class="w-full bg-slate-800 border-none p-3 rounded text-white outline-none">
+                        <option value="download">Download XLSX</option>
+                        <option value="email">Email Directly</option>
+                    </select>
+                    <input type="email" name="email_to" id="f_email_to" placeholder="Email address" class="w-full bg-slate-800 border-none p-3 rounded text-white">
+                    <button type="submit" class="w-full bg-blue-600 hover:bg-blue-500 text-white font-bold py-4 rounded shadow-lg transition">Create Invoice</button>
+                </div>
+            </div>
         </form>
     </div>
 
-    <footer class="text-center text-gray-400 text-sm py-8">
-        <p>&copy; 2024 Construction Admin Tools</p>
-    </footer>
+    <script>
+        async function runAI() {
+            const prompt = document.getElementById('ai-input').value;
+            const btn = document.getElementById('ai-btn');
+            if(!prompt) return;
+            btn.innerText = "Processing..."; btn.disabled = true;
 
+            try {
+                const res = await fetch('/slm-process', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({prompt})
+                });
+                const data = await res.json();
+                const parsed = JSON.parse(data.response);
+                
+                for (let key in parsed) {
+                    const el = document.getElementById('f_' + key);
+                    if (el) el.value = parsed[key];
+                }
+            } finally {
+                btn.innerText = "Extract to Form ↓"; btn.disabled = false;
+            }
+        }
+    </script>
 </body>
 </html>
