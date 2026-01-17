@@ -40,19 +40,8 @@
                         <div class="col-span-2">Day</div><div class="col-span-7">Site Name</div><div class="col-span-3 text-right">Pay (£)</div>
                     </div>
                     
-                    <script>
-                        const days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
-                        const keys = ["mon", "tues", "wed", "thurs", "fri", "sat", "sun"];
-                        days.forEach((day, i) => {
-                            document.write(`
-                                <div class="grid grid-cols-12 gap-4 items-center bg-slate-50 p-2 rounded border border-slate-100">
-                                    <span class="col-span-2 text-sm font-bold text-slate-600">${day}</span>
-                                    <input type="text" name="site_${keys[i]}" id="f_site_${keys[i]}" class="col-span-7 border rounded p-2 text-sm">
-                                    <input type="number" name="pay_${keys[i]}" id="f_pay_${keys[i]}" value="0" class="col-span-3 border rounded p-2 text-right font-mono">
-                                </div>
-                            `);
-                        });
-                    </script>
+                    <!-- Fixed: Replaced document.write with proper DOM manipulation -->
+                    <div id="weekly-breakdown"></div>
                 </div>
             </div>
 
@@ -81,11 +70,31 @@
     </div>
 
     <script>
+        // Fixed: Proper DOM manipulation instead of document.write
+        document.addEventListener('DOMContentLoaded', function() {
+            const days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
+            const keys = ["mon", "tues", "wed", "thurs", "fri", "sat", "sun"];
+            const container = document.getElementById('weekly-breakdown');
+            
+            days.forEach((day, i) => {
+                const dayRow = document.createElement('div');
+                dayRow.className = 'grid grid-cols-12 gap-4 items-center bg-slate-50 p-2 rounded border border-slate-100';
+                dayRow.innerHTML = `
+                    <span class="col-span-2 text-sm font-bold text-slate-600">${day}</span>
+                    <input type="text" name="site_${keys[i]}" id="f_site_${keys[i]}" class="col-span-7 border rounded p-2 text-sm">
+                    <input type="number" name="pay_${keys[i]}" id="f_pay_${keys[i]}" value="0" class="col-span-3 border rounded p-2 text-right font-mono">
+                `;
+                container.appendChild(dayRow);
+            });
+        });
+
         async function runAI() {
             const prompt = document.getElementById('ai-input').value;
             const btn = document.getElementById('ai-btn');
             if(!prompt) return;
-            btn.innerText = "Processing..."; btn.disabled = true;
+
+            btn.innerText = "Processing..."; 
+            btn.disabled = true;
 
             try {
                 const res = await fetch('/slm-process', {
@@ -93,6 +102,11 @@
                     headers: {'Content-Type': 'application/json'},
                     body: JSON.stringify({prompt})
                 });
+                
+                if (!res.ok) {
+                    throw new Error(`HTTP error! status: ${res.status}`);
+                }
+                
                 const data = await res.json();
                 const parsed = JSON.parse(data.response);
                 
@@ -100,8 +114,12 @@
                     const el = document.getElementById('f_' + key);
                     if (el) el.value = parsed[key];
                 }
+            } catch (error) {
+                console.error('Error processing AI request:', error);
+                alert('Error processing request. Please try again.');
             } finally {
-                btn.innerText = "Extract to Form ↓"; btn.disabled = false;
+                btn.innerText = "Extract to Form ↓"; 
+                btn.disabled = false;
             }
         }
     </script>
