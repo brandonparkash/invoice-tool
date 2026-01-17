@@ -1,123 +1,154 @@
 <!DOCTYPE html>
 <html lang="en-UK">
-  <head>
+<head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width", initial_scale=1.0">
-    <link rel="stylesheet" href="{{ url_for('static', path='css/main.css') }}">
-    <link rel="icon" type="image/x-icon" href="{{ url_for('static', path='images/pic.png') }}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ title }}</title>
-  </head>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-50 text-gray-800 font-sans">
 
-  <body>
-    <!-- Header -->
-    <header>
-      <h2>{{ title }}</h2>
+    <header class="bg-slate-800 text-white p-4 shadow-md">
+        <div class="max-w-4xl mx-auto flex justify-between items-center">
+            <h2 class="text-xl font-bold tracking-wide">{{ title }}</h2>
+        </div>
     </header>
-  
-    <!-- About Us Section -->
-    <section>
-      <section>
-        <h3>About Us:</h3>
-        <h4>Content:</h4>
-        <p>
-          The <strong>{{ title }}</strong> is designed for construction workers
-          who don't have time to repetitively fill in invoices manually. The purpose of this tool is to ask for information that you normally
-          would fill in yourself, then generate a custom excel invoice.
-        </p>
-        <h4>Instructions:</h4>
-        <p>
-          Simply fill in the form below, then submit the form
-          and receive your invoice.
-        </p>
-      </section><br>
-  
-      <!-- Form Section -->
-      <section id="invoice_form">
-        <h3>Invoice Automation Form:</h3>
-        <h4>General Information</h4>
-        <form action="{{ url_for('home') }}" method="post">
-          <label for="name">Enter your name: </label>
-          <input type="text" id="name" name="name"><br><br>
-          <label for="invoice_no">Enter your invoice number: </label>
-          <input type="text" id="invoice_no" name="invoice_no"><br><br>
 
-          <label for="current_date">Enter today's date: </label>
-          <input type="text" id="current_date" name="current_date"><br><br>
-          <label for="utr">Enter your UTR number: </label>
-          <input type="text" id="utr" name="utr"><br><br>
+    <div class="max-w-4xl mx-auto p-6">
+        
+        <div class="bg-white rounded-lg shadow p-6 mb-6">
+            <h3 class="text-lg font-semibold mb-2 text-slate-700">Quick Invoice Generator</h3>
+            <p class="text-gray-600 text-sm">
+                Fill out the details below to generate a professional PDF-ready Excel invoice instantly. 
+                Calculates 20% CIS tax automatically.
+            </p>
+        </div>
 
-          <label for="nin">Enter your National Insurance Number: </label>
-          <input type="text" id="nin" name="nin"><br><br>
-          <label for="week_ending">Enter the Week Ending date for this timesheet: </label>
-          <input type="text" id="week_ending" name="week_ending"><br><br>
+        <form action="{{ url_for('home') }}" method="post" class="space-y-6">
+            
+            <div class="bg-white rounded-lg shadow p-6 border-l-4 border-blue-500">
+                <h4 class="text-lg font-bold mb-4 border-b pb-2">1. Your Details</h4>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">Full Name</label>
+                        <input type="text" name="name" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">Invoice Number</label>
+                        <input type="text" name="invoice_no" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">UTR Number</label>
+                        <input type="text" name="utr" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">NI Number</label>
+                        <input type="text" name="nin" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">Date</label>
+                        <input type="text" name="current_date" placeholder="DD/MM/YYYY" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">Week Ending</label>
+                        <input type="text" name="week_ending" placeholder="DD/MM/YYYY" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border">
+                    </div>
+                </div>
+            </div>
 
-          <label for="company_name">Enter your company's name: </label>
-          <input type="text" id="company_name" name="company_name"><br><br>
-          <label for="company_road">Enter your company's road: </label>
-          <input type="text" id="company_road" name="company_road"><br><br>
+            <div class="bg-white rounded-lg shadow p-6 border-l-4 border-indigo-500">
+                <h4 class="text-lg font-bold mb-4 border-b pb-2">2. Bill To (Company)</h4>
+                <div class="grid grid-cols-1 gap-4">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">Company Name</label>
+                        <input type="text" name="company_name" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 p-2 border">
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <input type="text" name="company_road" placeholder="Road / Street" required class="block w-full rounded-md border-gray-300 shadow-sm p-2 border">
+                        <input type="text" name="company_city" placeholder="City" required class="block w-full rounded-md border-gray-300 shadow-sm p-2 border">
+                        <input type="text" name="company_postcode" placeholder="Postcode" required class="block w-full rounded-md border-gray-300 shadow-sm p-2 border">
+                    </div>
+                </div>
+            </div>
 
-          <label for="company_city">Enter your company's city: </label>
-          <input type="text" id="company_city" name="company_city"><br><br>
-          <label for="company_postcode">Enter your company's postcode: </label>
-          <input type="text" id="company_postcode" name="company_postcode"><br><br>
+            <div class="bg-white rounded-lg shadow p-6 border-l-4 border-green-500">
+                <h4 class="text-lg font-bold mb-4 border-b pb-2">3. Timesheet</h4>
+                <div class="space-y-3">
+                    <div class="hidden md:grid grid-cols-6 gap-2 font-semibold text-sm text-gray-600">
+                        <div class="col-span-1">Day</div>
+                        <div class="col-span-3">Site / Description</div>
+                        <div class="col-span-2">Rate (£)</div>
+                    </div>
 
-        <h4>Job Information</h4>
-          <label for="site_mon"><strong>Monday</strong> - Site Name: </label>
-          <input type="text" id="site_mon" name="site_mon">&nbsp;
-          <label for="pay_mon">Day Rate: £</label>
-          <input type="text" id="pay_mon" name="pay_mon"><br><br>
+                    <div class="grid grid-cols-1 md:grid-cols-6 gap-2 items-center">
+                        <div class="font-medium text-gray-700">Monday</div>
+                        <input type="text" name="site_mon" placeholder="Site Name" class="col-span-3 rounded-md border-gray-300 border p-2">
+                        <input type="number" step="0.01" name="pay_mon" placeholder="0.00" class="col-span-2 rounded-md border-gray-300 border p-2">
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-6 gap-2 items-center">
+                        <div class="font-medium text-gray-700">Tuesday</div>
+                        <input type="text" name="site_tues" placeholder="Site Name" class="col-span-3 rounded-md border-gray-300 border p-2">
+                        <input type="number" step="0.01" name="pay_tues" placeholder="0.00" class="col-span-2 rounded-md border-gray-300 border p-2">
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-6 gap-2 items-center">
+                        <div class="font-medium text-gray-700">Wednesday</div>
+                        <input type="text" name="site_wed" placeholder="Site Name" class="col-span-3 rounded-md border-gray-300 border p-2">
+                        <input type="number" step="0.01" name="pay_wed" placeholder="0.00" class="col-span-2 rounded-md border-gray-300 border p-2">
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-6 gap-2 items-center">
+                        <div class="font-medium text-gray-700">Thursday</div>
+                        <input type="text" name="site_thurs" placeholder="Site Name" class="col-span-3 rounded-md border-gray-300 border p-2">
+                        <input type="number" step="0.01" name="pay_thurs" placeholder="0.00" class="col-span-2 rounded-md border-gray-300 border p-2">
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-6 gap-2 items-center">
+                        <div class="font-medium text-gray-700">Friday</div>
+                        <input type="text" name="site_fri" placeholder="Site Name" class="col-span-3 rounded-md border-gray-300 border p-2">
+                        <input type="number" step="0.01" name="pay_fri" placeholder="0.00" class="col-span-2 rounded-md border-gray-300 border p-2">
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-6 gap-2 items-center">
+                        <div class="font-medium text-gray-700">Saturday</div>
+                        <input type="text" name="site_sat" placeholder="Site Name" class="col-span-3 rounded-md border-gray-300 border p-2">
+                        <input type="number" step="0.01" name="pay_sat" placeholder="0.00" class="col-span-2 rounded-md border-gray-300 border p-2">
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-6 gap-2 items-center">
+                        <div class="font-medium text-gray-700">Sunday</div>
+                        <input type="text" name="site_sun" placeholder="Site Name" class="col-span-3 rounded-md border-gray-300 border p-2">
+                        <input type="number" step="0.01" name="pay_sun" placeholder="0.00" class="col-span-2 rounded-md border-gray-300 border p-2">
+                    </div>
+                </div>
+            </div>
 
-          <label for="site_tues"><strong>Tuesday</strong> - Site Name: </label>
-          <input type="text" id="site_tues" name="site_tues">&nbsp;
-          <label for="pay_tues">Day Rate: £</label>
-          <input type="text" id="pay_tues" name="pay_tues"><br><br>
+            <div class="bg-white rounded-lg shadow p-6 border-l-4 border-orange-500">
+                <h4 class="text-lg font-bold mb-4 border-b pb-2">4. Payment Details</h4>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">Bank Name</label>
+                        <input type="text" name="bank_name" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2 border">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">Expenses (£)</label>
+                        <input type="number" step="0.01" name="expenses" placeholder="0.00" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2 border">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">Sort Code</label>
+                        <input type="text" name="sort_code" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2 border">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">Account Number</label>
+                        <input type="text" name="account_no" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2 border">
+                    </div>
+                </div>
+            </div>
 
-          <label for="site_wed"><strong>Wednesday</strong> - Site Name: </label>
-          <input type="text" id="site_wed" name="site_wed">&nbsp;
-          <label for="pay_wed">Day Rate: £</label>
-          <input type="text" id="pay_wed" name="pay_wed"><br><br>
+            <button type="submit" class="w-full bg-slate-800 text-white font-bold py-4 px-6 rounded-lg hover:bg-slate-700 transition duration-200 shadow-lg text-lg">
+                Generate Invoice
+            </button>
+        </form>
+    </div>
 
-          <label for="site_thurs"><strong>Thursday</strong> - Site Name: </label>
-          <input type="text" id="site_thurs" name="site_thurs">&nbsp;
-          <label for="pay_thurs">Day Rate: £</label>
-          <input type="text" id="pay_thurs" name="pay_thurs"><br><br>
-
-          <label for="site_fri"><strong>Friday</strong> - Site Name: </label>
-          <input type="text" id="site_fri" name="site_fri">&nbsp;
-          <label for="pay_fri">Day Rate: £</label>
-          <input type="text" id="pay_fri" name="pay_fri"><br><br>
-
-          <label for="site_sat"><strong>Saturday</strong> - Site Name: </label>
-          <input type="text" id="site_sat" name="site_sat">&nbsp;
-          <label for="pay_sat">Day Rate: £</label>
-          <input type="text" id="pay_sat" name="pay_sat"><br><br>
-      
-          <label for="site_sun"><strong>Sunday</strong> - Site Name: </label>
-          <input type="text" id="site_sun" name="site_sun">&nbsp;
-          <label for="pay_sun">Day Rate: £</label>
-          <input type="text" id="pay_sun" name="pay_sun"><br><br>
-
-        <h4>Bank Details</h4>
-        <label for="bank_name">Enter your name: </label>
-        <input type="text" id="bank_name" name="bank_name"><br><br>
-        <label for="sort_code">Enter your sort code: </label>
-        <input type="text" id="sort_code" name="sort_code"><br><br>
-        <label for="account_no">Enter your account number: </label>
-        <input type="text" id="account_no" name="account_no"><br><br>
-        <label for ="expenses">Enter your job expenses: £</label>
-        <input type="text" id="expenses" name="expenses"><br><br>
-
-        <input type="submit">
-        <input type="reset">
-      </form>
-    </section>
-
-    <!-- Footer Section -->
-    </section><br><br>
-    <footer>
-      <a href="mailto:work.bpc189@gmail.com?subject=General%20Enquiry" target="_blank"><img src="{{ url_for('static', path='images/mail.png') }}" class="socials" alt="Mail"></a>
-      <img src="{{ url_for('static', path='images/pic.png') }}" alt="pic" class="socials"></a>
-      <img src="{{ url_for('static', path='images/acs.png') }}" class="socials id="acs" alt="avant-cs"></a>
+    <footer class="text-center text-gray-400 text-sm py-8">
+        <p>&copy; 2024 Construction Admin Tools</p>
     </footer>
-  </body>
+
+</body>
 </html>
