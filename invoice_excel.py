@@ -35,14 +35,14 @@ def func_invoice(name, invoice_no, current_date, utr, nin, week_ending, site_mon
     
     # Custom information
     ws["A4"] = "TO"
-    ws["A5"] = "Avant"
-    ws["A6"] = "Compliance"
-    ws["A7"] = "Solutions"
+    ws["A5"] = "*****"
+    ws["A6"] = "**********"
+    ws["A7"] = "*********"
 
-    ws["A9"] = "34 Grove Park"
-    ws["A10"] = "Road"
-    ws["A11"] = "Rainham"
-    ws["A12"] = "RM13 7DA"
+    ws["A9"] = "** ***** ****"
+    ws["A10"] = "****"
+    ws["A11"] = "*******"
+    ws["A12"] = "**** ***"
 
     # Job information for each day
     ws["A19"] = "Monday"
@@ -103,4 +103,5 @@ def func_pay(mon, tues, wed, thurs, fri, sat, sun):
     gross = sum([mon, tues, wed, thurs, fri, sat, sun])
     tax = (gross / 10) * 2
     take_home = gross - tax
+
     return {"gross": gross, "tax": tax, "take_home": take_home}
